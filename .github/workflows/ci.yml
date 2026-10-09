@@ -1,0 +1,45 @@
+name: CI and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - name: Build the web app
+        run: npx expo export -p web
+
+  deploy:
+    # Publishes to the password-protected Vercel preview, only from main and only once the checks pass.
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx expo export -p web
+      - name: Stage the build for Vercel
+        # Vercel never uploads folders named node_modules, and the web fonts live in one, so rename it and patch the paths.
+        run: |
+          cp -R dist/. deploy/
+          if [ -d deploy/assets/node_modules ]; then
+            mv deploy/assets/node_modules deploy/assets/vendor
+            find deploy/_expo -name '*.js' -exec sed -i 's#/assets/node_modules/#/assets/vendor/#g' {} +
+          fi
+      - name: Deploy to Vercel
+        working-directory: deploy
+        run: npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"
