@@ -195,6 +195,43 @@ function Principles() {
 
 
 
+function About() {
+  const { width } = useWindowDimensions();
+  const cols = width > 900;
+  const facts = [
+    ['1', 'view of everything you own and owe'],
+    ['100', 'the age your plan is stress-tested to'],
+    ['0', 'products sold, so nothing nudges our advice'],
+  ];
+  return (
+    <Container style={{ paddingVertical: 100 }}>
+      <Eyebrow>About Y-WLTH</Eyebrow>
+      <View style={{ flexDirection: cols ? 'row' : 'column', gap: 48, marginTop: 14 }}>
+        <View style={{ flex: 1.3, gap: 18 }}>
+          <H2 wide>Wealth should be felt, not buried in a spreadsheet.</H2>
+          <P style={{ fontSize: 17, lineHeight: 28 }}>
+            Most people with real money can't say what they're worth today. It sits across banks, pensions, platforms, property and private holdings, each with its own login and its own idea of the truth. Y-WLTH began with one question: what if opening an app made the weight of your wealth land the moment you saw it?
+          </P>
+          <P style={{ fontSize: 17, lineHeight: 28 }}>
+            So we built the dashboard first. Everything you own, live, in one place, with a plain-English answer to any question you ask it. Then we put an adviser behind it, with a forecast to age 100, honest costs and recommendations you approve before anything happens.
+          </P>
+          <P style={{ fontSize: 14, lineHeight: 22 }}>
+            Y-WLTH is a design concept: a fictional firm with illustrative sample data, built to explore what a calmer, clearer wealth app could feel like.
+          </P>
+        </View>
+        <View style={{ flex: 1, gap: 14 }}>
+          {facts.map(([n, d]) => (
+            <View key={d} style={{ flexDirection: 'row', alignItems: 'center', gap: 20, padding: 24, borderRadius: 24, backgroundColor: c.card, borderWidth: 1, borderColor: c.border }}>
+              <Text style={{ fontFamily: font.b, fontSize: 44, letterSpacing: -1.5, color: c.teal, minWidth: 84 }}>{n}</Text>
+              <Text style={{ flex: 1, fontFamily: font.r, fontSize: 15.5, lineHeight: 23, color: c.textDim }}>{d}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+    </Container>
+  );
+}
+
 export default function Site() {
   const scroll = useRef<ScrollView>(null);
   const offsets = useRef<Record<string, number>>({});
@@ -256,6 +293,7 @@ export default function Site() {
           phone={<Phone width={330}><ProfileScreen /></Phone>}
         />
         <A id="how"><Principles /></A>
+        <A id="about"><About /></A>
         <CTA />
         <Footer />
       </ScrollView>

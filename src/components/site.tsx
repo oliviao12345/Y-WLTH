@@ -57,6 +57,7 @@ export function Nav({ onGo, active }: { onGo?: (id: string) => void; active?: 'f
   const items = [
     ['Platform', 'a:what'],
     ['Insights', 'a:insights'],
+    ['About', 'a:about'],
     ['FAQ', '/faq'],
   ] as const;
   const press = (to: string) => { setMenu(false); if (to.startsWith('a:')) go(to.slice(2)); else router.push(to as never); };
@@ -141,7 +142,7 @@ export function Footer() {
   const { width } = useWindowDimensions();
   const wide = width > 800;
   const cols: [string, [string, string | (() => void)][]][] = [
-    ['Y-WLTH', [['FAQ', '/faq'], ['Call Us', dial], ['Book A Meeting', () => { try { window.dispatchEvent(new CustomEvent('ywlth:book')); } catch { /* web only */ } }]]],
+    ['Y-WLTH', [['About', () => router.push({ pathname: '/', params: { go: 'about' } } as never)], ['FAQ', '/faq'], ['Call Us', dial], ['Book A Meeting', () => { try { window.dispatchEvent(new CustomEvent('ywlth:book')); } catch { /* web only */ } }]]],
   ];
   return (
     <View style={{ borderTopWidth: 1, borderTopColor: c.border, backgroundColor: c.bgDeep }}>
