@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "proxy": { "entrypoint": "proxy.ts" },
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "headers": [
     { "source": "/(.*)", "headers": [

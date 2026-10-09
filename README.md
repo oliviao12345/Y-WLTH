@@ -9,10 +9,8 @@ A design concept for **Y-WLTH**, a fictional wealth adviser: a **concept** iOS a
 | | |
 |---|---|
 | **Website and app** | https://y-wlth.vercel.app |
-| **How to log in** | The site is password protected. When your browser asks, enter **any username** and the password. |
-| **Password** | Email **oliviaxtech@outlook.com** and I'll send it over. |
 
-The app also runs in the browser at `/home` once you are in (it is the same code as the iOS app).
+The app also runs in the browser at `/home` (it is the same code as the iOS app).
 
 ## Tech stack
 
@@ -29,7 +27,7 @@ One TypeScript codebase produces the iOS app and the website.
 | **Native feel** | Expo Haptics, Symbols, Image, Font (Rubik via Google Fonts), Safe Area Context, Screens |
 | **State and data** | In-app store (React context) with illustrative sample data in `src/data/`. No backend or database |
 | **Logic** | Plain TypeScript in `src/lib/`: forecast engine, money and spending analysis, intelligence and recommendations, plain-English question answering |
-| **Hosting** | Vercel, with a password gate in an edge proxy (`deploy/proxy.ts`) |
+| **Hosting** | Vercel (static export, deployed from GitHub Actions) |
 | **Tooling** | Expo CLI, ESLint (`expo lint`), `tsc --noEmit`, Playwright for site screenshots |
 
 ## What it shows
@@ -118,9 +116,9 @@ Then commit `docs/screenshots/`.
 
 ## Deploying (CI)
 
-Every push to `main` runs a typecheck and a web build, and then publishes to the password-protected Vercel preview above. Pull requests run the checks only.
+Every push to `main` runs a typecheck and a web build, and then publishes to the Vercel site above. Pull requests run the checks only.
 
-The workflow in `.github/workflows/ci.yml` needs three repository secrets: `VERCEL_TOKEN` (create one in your Vercel account settings), `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`. The site password itself lives in Vercel as the `SITE_PASSWORD` environment variable, and the check runs in `deploy/proxy.ts`.
+The workflow in `.github/workflows/ci.yml` needs three repository secrets: `VERCEL_TOKEN` (create one in your Vercel account settings), `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`.
 
 ## Licence and content
 

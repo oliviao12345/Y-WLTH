@@ -1,1 +1,1 @@
-{ "name": "ywlth", "private": true, "version": "1.0.0", "dependencies": { "@vercel/functions": "^2.0.0" } }
+{ "name": "ywlth", "private": true, "version": "1.0.0" }

@@ -18,7 +18,7 @@ jobs:
         run: npx expo export -p web
 
   deploy:
-    # Publishes to the password-protected Vercel preview, only from main and only once the checks pass.
+    # Publishes to the Vercel site, only from main and only once the checks pass.
     needs: check
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
